@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: user
+    description: User Service API
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          public-key-location: classpath:jwt/public.pem
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+      base-path: /actuator
+  server:
+    port: ${ACTUATOR_PORT:8202}
+  tracing:
+    sampling:
+      probability: 1
+    enabled: ${TRACING:false}
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_ENDPOINT:http://localhost:9411/api/v2/spans}
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui
+    enabled: true
+
+server:
+  port: ${SERVER_PORT:8102}
+  standalone: ${STANDALONE:true}
+
+service:
+  key: user_service_secret
+
+wallet:
+  url: ${WALLET_URL:http://localhost:8103}
+
+auth:
+  url: ${AUTH_URL:http://localhost:8101}
+
+logging.level:
+  org.zalando.logbook: trace
+
+logbook:
+  format:
+    style: http

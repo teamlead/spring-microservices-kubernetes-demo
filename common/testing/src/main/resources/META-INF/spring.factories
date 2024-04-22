@@ -1,0 +1,2 @@
+org.springframework.context.ApplicationContextInitializer=\
+  pro.teamlead.kubepay.common.testing.integration.initializer.TestPropertiesInitializer

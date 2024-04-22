@@ -1,0 +1,2 @@
+user:
+  url: ${wire-mock.url}

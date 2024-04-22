@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+  labels:
+    app: gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      containers:
+        - name: gateway
+          image: kubepay.gateway:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: AUTH_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: AUTH_URL
+                  name: shared-env-config
+            - name: USER_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: USER_URL
+                  name: shared-env-config
+            - name: WALLET_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: WALLET_URL
+                  name: shared-env-config
+            - name: BILLING_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: BILLING_URL
+                  name: shared-env-config
+            - name: STANDALONE
+              valueFrom:
+                configMapKeyRef:
+                  key: STANDALONE
+                  name: shared-env-config
+            - name: TRACING
+              valueFrom:
+                configMapKeyRef:
+                  key: TRACING
+                  name: shared-env-config
+            - name: ZIPKIN_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  key: ZIPKIN_ENDPOINT
+                  name: shared-env-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway
+spec:
+  type: NodePort
+  selector:
+    app: gateway
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8100

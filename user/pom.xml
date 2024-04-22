@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>user</artifactId>
+    <version>0.0.0</version>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>pro.teamlead.kubepay</groupId>
+        <artifactId>root</artifactId>
+        <version>0.0.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <modules>
+        <module>user-service</module>
+        <module>user-api</module>
+        <module>user-client</module>
+    </modules>
+
+</project>

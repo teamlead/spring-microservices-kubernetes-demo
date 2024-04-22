@@ -1,0 +1,78 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "https://localhost"
+            allowedMethods:
+              - GET
+              - POST
+              - OPTIONS
+      httpclient:
+        wiretap: true
+      httpserver:
+        wiretap: true
+      routes:
+      - id: auth
+        uri: ${AUTH_URL:http://localhost:8101}
+        predicates:
+          - Path=/auth/**
+        filters:
+          - StripPrefix=1
+      - id: user
+        uri: ${USER_URL:http://localhost:8102}
+        predicates:
+          - Path=/user/**
+        filters:
+          - StripPrefix=1
+      - id: wallet
+        uri: ${WALLET_URL:http://localhost:8103}
+        predicates:
+          - Path=/wallet/**
+        filters:
+          - StripPrefix=1
+      - id: billing
+        uri: https://httpbin.org
+        predicates:
+          - Path=/billing/**
+        filters:
+          - RewritePath=/billing/(?<path>.*),/get?path=$\{path}
+          - name: RequestRateLimiter
+            args:
+              rate-limiter: "#{@customRateLimiter}"
+              key-resolver: "#{@customKeyResolver}"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+      base-path: /actuator
+  server:
+    port: ${ACTUATOR_PORT:8200}
+  tracing:
+    sampling:
+      probability: 1
+    enabled: ${TRACING:false}
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_ENDPOINT:http://localhost:9411/api/v2/spans}
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui
+    urls:
+      - url: /auth/api-docs
+        name: auth
+      - url: /wallet/api-docs
+        name: wallet
+      - url: /user/api-docs
+        name: user
+
+server:
+  port : ${SERVER_PORT:8100}
+  standalone: ${STANDALONE:true}

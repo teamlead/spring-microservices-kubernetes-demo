@@ -1,0 +1,12 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: shared-env-config
+data:
+  AUTH_URL: "http://auth"
+  USER_URL: "http://user"
+  WALLET_URL: "http://wallet"
+  BILLING_URL: "http://gateway/billing/test"
+  STANDALONE: "false"
+  TRACING: "true"
+  ZIPKIN_ENDPOINT: "http://zipkin:9411/api/v2/spans"

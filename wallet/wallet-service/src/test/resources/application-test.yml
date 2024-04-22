@@ -1,0 +1,6 @@
+auth:
+  url: ${wire-mock.url}
+billing:
+  url: ${wire-mock.url}
+user:
+  url: ${wire-mock.url}

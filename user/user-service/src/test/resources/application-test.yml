@@ -1,0 +1,4 @@
+auth:
+  url: ${wire-mock.url}
+wallet:
+  url: ${wire-mock.url}

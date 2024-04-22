@@ -1,0 +1,4 @@
+pro.teamlead.kubepay.common.service.configuration.ServiceSecurityBeanConfiguration
+pro.teamlead.kubepay.common.service.configuration.ApiConfiguration
+pro.teamlead.kubepay.common.service.configuration.SpringSecurityConfiguration
+

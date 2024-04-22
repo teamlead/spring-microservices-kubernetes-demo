@@ -1,0 +1,63 @@
+version: "3.8"
+
+services:
+  zipkin:
+    image: openzipkin/zipkin
+    ports:
+      - "9411:9411"
+  gateway:
+    image: kubepay.gateway:latest
+    ports:
+      - "8100:8100"
+      - "8500:8500"
+    environment:
+      - AUTH_URL=${AUTH_URL}
+      - USER_URL=${USER_URL}
+      - WALLET_URL=${WALLET_URL}
+      - BILLING_URL=${BILLING_URL}
+      - STANDALONE=${STANDALONE}
+      - TRACING=${TRACING}
+      - ZIPKIN_ENDPOINT=${ZIPKIN_ENDPOINT}
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8500
+  auth:
+    image: kubepay.auth:latest
+    ports:
+      - "8101:8101"
+      - "8501:8501"
+    environment:
+      - AUTH_URL=${AUTH_URL}
+      - USER_URL=${USER_URL}
+      - WALLET_URL=${WALLET_URL}
+      - BILLING_URL=${BILLING_URL}
+      - STANDALONE=${STANDALONE}
+      - TRACING=${TRACING}
+      - ZIPKIN_ENDPOINT=${ZIPKIN_ENDPOINT}
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8501
+  user:
+    image: kubepay.user:latest
+    ports:
+      - "8102:8102"
+      - "8502:8502"
+    environment:
+      - AUTH_URL=${AUTH_URL}
+      - USER_URL=${USER_URL}
+      - WALLET_URL=${WALLET_URL}
+      - BILLING_URL=${BILLING_URL}
+      - STANDALONE=${STANDALONE}
+      - TRACING=${TRACING}
+      - ZIPKIN_ENDPOINT=${ZIPKIN_ENDPOINT}
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8502
+  wallet:
+    image: kubepay.wallet:latest
+    ports:
+      - "8103:8103"
+      - "8503:8503"
+    environment:
+      - AUTH_URL=${AUTH_URL}
+      - USER_URL=${USER_URL}
+      - WALLET_URL=${WALLET_URL}
+      - BILLING_URL=${BILLING_URL}
+      - STANDALONE=${STANDALONE}
+      - TRACING=${TRACING}
+      - ZIPKIN_ENDPOINT=${ZIPKIN_ENDPOINT}
+      - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8503

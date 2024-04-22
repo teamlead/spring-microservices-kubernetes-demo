@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: auth
+    description: Authorization Service API
+
+security:
+  customServicePrincipal: true
+  customFilterChain: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+      base-path: /actuator
+  server:
+    port: ${ACTUATOR_PORT:8201}
+  tracing:
+    sampling:
+      probability: 1
+    enabled: ${TRACING:false}
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_ENDPOINT:http://localhost:9411/api/v2/spans}
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui
+    enabled: true
+
+server:
+  port: ${SERVER_PORT:8101}
+  standalone: ${STANDALONE:true}
+
+services: '{"user": "user_service_secret", "wallet": "wallet_service_secret"}'
+scopes: '{"user": "ROLE_SERVICE,wallet:create", "wallet": "ROLE_SERVICE,user:info", "auth": "ROLE_SERVICE,user:password,user:info,user:create"}'
+
+jwt:
+  ttl: 3600
+
+user:
+  url: ${USER_URL:http://localhost:8102}
+
+logging.level:
+  org.zalando.logbook: trace
+
+logbook:
+  format:
+    style: http
