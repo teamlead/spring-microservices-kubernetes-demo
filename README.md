@@ -36,11 +36,11 @@ The following graph illustrates the architecture described above.
 ```mermaid
 graph TD
 
-gateway[<b>Gateway Service</b>\nhttp://gateway:8100, path=/**]
-auth[<b>Auth Service</b>\nhttp://auth:8101]
-user[<b>User Service</b>\nhttp://user:8102]
-wallet[<b>Wallet Service</b>\nhttp://wallet:8103]
-zipkin[<b>Zipkin UI</b>\nhttp://zipkin:9411]
+gateway[<b>Gateway Service</b><br/>gateway:8100, path=/**]
+auth[<b>Auth Service</b><br/>auth:8101]
+user[<b>User Service</b><br/>user:8102]
+wallet[<b>Wallet Service</b><br/>wallet:8103]
+zipkin[<b>Zipkin UI</b><br/>zipkin:9411]
 
 gateway --> |/auth/**| auth
 gateway --> |/user/**| user
@@ -48,7 +48,7 @@ gateway --> |/wallet/**| wallet
 auth --> |createUser, getUserInfo| user
 wallet --> |getUserInfo| user
 wallet --> |getServiceToken| auth
-wallet -.-> |<b>External Service</b>\npath=/billing/**\nRate Limited\n\nperformTopUp| gateway
+wallet -.-> |<b>External Service</b><br/>path=/billing/**<br/>Rate Limited<br/><br/>performTopUp| gateway
 user --> |createWallet| wallet
 user --> |getServiceToken| auth
 
